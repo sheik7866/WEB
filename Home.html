@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+	<style>
+	
+		p{
+			color:red;
+		}
+
+        .menu{ 
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+			background-color: #00ccff;
+		}
+
+		li {
+			float: left;
+		}
+
+		li a{
+			display: block;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+		}
+
+		li a:hover:not(.active) {
+			background-color: #111;
+		}
+
+		.active {
+			background-color: #4CAF50;
+		}
+
+        html,body {
+					margin: 0;
+					padding: 0;
+		}
+		
+		.slider {
+			width: 1024px;
+			margin: 2em auto;
+		}
+
+		.slider-wrapper {
+			width: 100%;
+			height: 400px;
+			position: relative;
+		}
+
+		.slide {
+			float: left;
+			position: absolute;
+			width: 100%;
+			height: 80%;
+			opacity: 0;
+			transition: opacity 3s linear;
+		}
+
+		.slider-wrapper > .slide:first-child {
+			opacity: 1;
+		}
+
+		h1,h2,h3{
+			color:lime;
+		}
+
+		h2{
+			background-color:#00ccff;
+		}
+
+
+
+
+
+		button:hover, a:hover {
+			opacity: 0.7;
+		}
+
+		hr{
+			color:lime;
+		}
+
+		/* Style the video: 100% width and height to cover the entire window */
+		#myVideo {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			min-width: 100%; 
+			min-height: 100%;
+		}
+		
+		body {
+		  margin: 0;
+		  padding: 0;
+		/*  Background fallback in case of IE8 & down, or in case video doens't load, such as with slower connections  */
+		  background: #333;
+		  background-attachment: fixed;
+		  background-size: cover;
+		}
+
+		/* The only rule that matters */
+		
+		#video-background {
+		/*  making the video fullscreen  */
+		  position: fixed;
+		  right: 0; 
+		  bottom: 0;
+		  min-width: 100%; 
+		  min-height: 100%;
+		  width: auto; 
+		  height: auto;
+		  z-index: -100;
+		}
+ 
+	</style>
+	<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>  
+	<!--  Video is muted & autoplays, placed after major DOM elements for performance & has an image fallback  -->
+	<video autoplay loop id="video-background" muted plays-inline>
+	  <source src="Deep Blue Sky - Clouds Timelapse - Free Footage - Full HD 1080p.mp4" type="video/mp4">
+	</video>
+	</head>
+
+	<br/>
+	<body>
+
+		
+		<CENTER>
+			<div class="header">
+				<a href="Home.html" class="logo"><div class="header"> <img src="1.png" width="150" height="100">   </a>
+			</div>
+			
+			<h1>SHEIK'S DIGGING CONTRACTORS</h1>
+			<h2>We Excuavate To Your Satisfaction</h2>
+		</CENTER>
+		
+		 <center>
+			 <div>
+			 <img src="banner.png" width="1257px" height="370px">
+			 </div>
+		 </center>
+		<br/>
+		
+		<center>
+			<ul class="menu">
+				<li><a class="active" href="Home.html">Home</a></li>
+				<li><a href="Product.html">Product</a></li>
+				<a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
+
+			</ul>
+		</center>
+
+
+		<div class="slider" id="main-slider">
+			<!-- outermost container element -->
+			<div class="slider-wrapper">
+				<!-- innermost wrapper element -->
+				<img src="1.png" alt="First" class="slide" /><!-- slides -->
+				<img src="2.png" alt="Second" class="slide" />
+				<img src="8.png" alt="Third" class="slide" />
+			</div>
+		</div>	
+
+
+		<script>
+
+			(function () {
+
+				function Slideshow(element) {
+					this.el = document.querySelector(element);
+					this.init();
+				}
+
+				Slideshow.prototype = {
+					init: function () {
+						this.wrapper = this.el.querySelector(".slider-wrapper");
+						this.slides = this.el.querySelectorAll(".slide");
+						this.previous = this.el.querySelector(".slider-previous");
+						this.next = this.el.querySelector(".slider-next");
+						this.index = 0;
+						this.total = this.slides.length;
+						this.timer = null;
+
+						this.action();
+						this.stopStart();
+					},
+					_slideTo: function (slide) {
+						var currentSlide = this.slides[slide];
+						currentSlide.style.opacity = 1;
+
+						for (var i = 0; i < this.slides.length; i++) {
+							var slide = this.slides[i];
+							if (slide !== currentSlide) {
+								slide.style.opacity = 0;
+							}
+						}
+					},
+					action: function () {
+						var self = this;
+						self.timer = setInterval(function () {
+							self.index++;
+							if (self.index == self.slides.length) {
+								self.index = 0;
+							}
+							self._slideTo(self.index);
+
+						}, 3000);
+					},
+					stopStart: function () {
+						var self = this;
+						self.el.addEventListener("mouseover", function () {
+							clearInterval(self.timer);
+							self.timer = null;
+
+						}, false);
+						self.el.addEventListener("mouseout", function () {
+							self.action();
+
+						}, false);
+					}
+
+
+				};
+
+				document.addEventListener("DOMContentLoaded", function () {
+
+					var slider = new Slideshow("#main-slider");
+
+				});
+
+
+			})();
+
+
+		</script>
+
+
+		<hr>
+		<center>
+			<iframe src="About.html" height="200" width="1250">
+				<p>Your browser does not support iframes.</p>
+			</iframe>
+		</center>
+		  
+
+		<center>
+			<h2>Contact Us</h2>
+			<p>+64786978900</p>
+		</center>
+		
+		<img src="Map.png" width="100%"  height="370px"
+			</br>
+				<div>
+					<!-- Footer -->
+					<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+					   <center>
+						    <a href="https://www.facebook.com/Sheiks-digging-contractors-1639564929646895/"><img src="facebook.png"></a>
+							<a href="https://www.instagram.com/"><img src="instagram.png"></a>
+							<a><img src="youtube.png" width="50px" height="50px">  </a>              
+							<a><img src="pinterest.png" width="50px" height="50px"></a>
+							<a><img src="twitter.png"></a>
+						 
+						</center>
+				   </footer>
+
+				</div>
+
+	</body>
+</html>
